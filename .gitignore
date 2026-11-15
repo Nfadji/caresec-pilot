@@ -2,3 +2,5 @@ __pycache__/
 *.pyc
 .venv/
 reports/*.log
+/truth_private/
+/manifests/case_manifest.csv
