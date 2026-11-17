@@ -31,7 +31,7 @@ def load_manifest(repo_root: Path) -> list[dict]:
     manifest_path = public_manifest if public_manifest.exists() else private_manifest
     if not manifest_path.exists():
         raise FileNotFoundError(f"Could not find manifest at {public_manifest} or {private_manifest}.")
-    with manifest_path.open("r", newline="", encoding="utf-8") as f:
+    with manifest_path.open("r", newline="", encoding="utf-8-sig") as f:
         return list(csv.DictReader(f))
 
 
