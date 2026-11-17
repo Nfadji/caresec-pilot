@@ -1,0 +1,28 @@
+rules:
+  - id: caresec.java.cwe89.sql-injection-sink
+    languages: [java]
+    severity: ERROR
+    message: Potential SQL injection via dynamic statement execution (CWE-89).
+    metadata:
+      cwe: "CWE-89: Improper Neutralization of Special Elements used in an SQL Command"
+    pattern-either:
+      - pattern: $STMT.executeQuery($QUERY)
+      - pattern: $STMT.executeUpdate($QUERY)
+      - pattern: $STMT.execute($QUERY)
+      - pattern: $CONN.prepareCall($QUERY)
+
+  - id: caresec.java.cwe22.path-traversal-sink
+    languages: [java]
+    severity: ERROR
+    message: Potential path traversal via file system access (CWE-22).
+    metadata:
+      cwe: "CWE-22: Improper Limitation of a Pathname to a Restricted Directory"
+    pattern-either:
+      - pattern: new java.io.File($PATH, ...)
+      - pattern: new File($PATH, ...)
+      - pattern: new java.io.FileInputStream($PATH)
+      - pattern: new FileInputStream($PATH)
+      - pattern: new java.io.FileOutputStream($PATH)
+      - pattern: new FileOutputStream($PATH)
+      - pattern: java.nio.file.Paths.get($PATH, ...)
+      - pattern: Paths.get($PATH, ...)
