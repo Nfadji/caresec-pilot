@@ -4,3 +4,6 @@ __pycache__/
 reports/*.log
 /truth_private/
 /manifests/case_manifest.csv
+# Keep raw Semgrep results local
+/scanners/semgrep_all20.json
+/scanners/semgrep_first5.json
