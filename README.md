@@ -4,11 +4,11 @@ Prototype pipeline evaluating Confidence-Aware Reasoning and Escalation (PROCEED
 
 ## Ownership Lanes & Repository Layout
 - **Lane 1 - N'Fadji Kake (cases/, manifests/, truth_private/):** 20 sanitized Java cases (CASE_01.java-CASE_20.java), public manifest (case_manifest_public.csv), and local-only ground truth.
-- **Lane 2 - [TBD] (variants/):** Generator for Conditions A (Complete), B (Masked), C (Disagreement), and D (Provenance Gap) (~80 records).
-- **Lane 3 - Kathryn Walker (scanners/):** Semgrep CE & CodeQL adapters, Evidence Ledger JSON builder, and read-only verification hooks.
-- **Lane 4 - [TBD] (agent/):** Structured LLM triage agent + u_M (model competence) & u_E (evidence) uncertainty proxies.
-- **Lane 5 - [TBD] (controller/):** PROCEED / VERIFY / ESCALATE decision controller (max 2 read-only verify steps).
-- **Lane 6 - [TBD] (tests/, reports/):** Schema validation, anti-leakage unit tests, B1-B3 baseline comparisons, and final report/slides.
+- **Lane 2 - Euphreum (@asmamawu-ai21) (variants/):** Generator for Conditions A (Complete), B (Masked), C (Disagreement), and D (Provenance Gap) (~80 records).
+- **Lane 3 - Kathryn Walker (@kwalerk) (scanners/):** Semgrep CE & CodeQL adapters, Evidence Ledger JSON builder, and read-only verification hooks.
+- **Lane 4 - Angel (agent/):** Structured LLM triage agent + u_M (model competence) and u_E (evidence completeness) uncertainty proxies.
+- **Lane 5 - Aldara (controller/):** PROCEED / VERIFY / ESCALATE decision controller with bounded verification loop (max 2 hook calls).
+- **Lane 6 - Open (tests/, reports/):** Schema validation, anti-leakage tests, and B1-B3 baseline evaluation summaries.
 
 ## Frozen CLI Contract
 - python -m cases.validate_manifest
