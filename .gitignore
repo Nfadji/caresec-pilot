@@ -6,4 +6,6 @@ reports/*.log
 /manifests/case_manifest.csv
 # Keep raw Semgrep results local
 /scanners/semgrep_all20.json
-/scanners/semgrep_first5.json
+/scanners/semgrep_first5.json/variants/*_local.json
+/variants/*_local.json 
+/scanners/semgrep_first5.json 
