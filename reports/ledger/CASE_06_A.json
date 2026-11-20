@@ -1,0 +1,34 @@
+{
+  "case_id": "CASE_06",
+  "variant_id": "CASE_06_A",
+  "evidence_condition": "A_COMPLETE",
+  "claim_id": "CLM_01",
+  "cwe": "CWE-89",
+  "claim": "possible_sql_injection",
+  "file": "cases/CASE_06.java",
+  "line_range": "33-39",
+  "semgrep": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "1.185.0",
+    "matched_lines": null,
+    "finding_count": 0
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/sql-injection",
+    "version": "2.27.4",
+    "matched_lines": "37-37",
+    "finding_count": 1,
+    "other_findings": 0,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  },
+  "source_available": true,
+  "source_hash": "a6e7d3ae8febf361b5ff397efeea11c8bdb2f64ed4a0ebe931ae7d0cafb24287",
+  "manifest_hash_match": "crlf_normalized",
+  "u_m_level": "UNSET",
+  "u_e_level": "UNSET",
+  "action": "PENDING",
+  "scanned_at_utc": "2026-11-20T16:02:39.035021+00:00"
+}

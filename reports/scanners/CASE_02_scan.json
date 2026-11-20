@@ -1,0 +1,25 @@
+{
+  "case_id": "CASE_02",
+  "file": "cases/CASE_02.java",
+  "file_hash": "b6bd8c9039d32f56c6a5a6d0ee0a5f9fe9b5aca6f1b0f2e3408d2f2d208c3f32",
+  "hash_verified": true,
+  "hash_match": "crlf_normalized",
+  "cwe": "CWE-22",
+  "semgrep": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "1.185.0",
+    "matched_lines": null,
+    "finding_count": 0
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/path-injection",
+    "version": "2.27.4",
+    "matched_lines": "56-56",
+    "finding_count": 1,
+    "other_findings": 1,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  }
+}

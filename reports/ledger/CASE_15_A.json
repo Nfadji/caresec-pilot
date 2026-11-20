@@ -1,0 +1,34 @@
+{
+  "case_id": "CASE_15",
+  "variant_id": "CASE_15_A",
+  "evidence_condition": "A_COMPLETE",
+  "claim_id": "CLM_01",
+  "cwe": "CWE-89",
+  "claim": "possible_sql_injection",
+  "file": "cases/CASE_15.java",
+  "line_range": "32-38",
+  "semgrep": {
+    "status": "finding",
+    "rule_id": "scanners.caresec.java.cwe89.sql-injection-sink",
+    "version": "1.185.0",
+    "matched_lines": "38-38",
+    "finding_count": 1
+  },
+  "codeql": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "2.27.4",
+    "matched_lines": null,
+    "finding_count": 0,
+    "other_findings": 0,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  },
+  "source_available": true,
+  "source_hash": "e2bd91079047e04652297b0543d642a32a4718d2d19ca60e4c90464b80a653f7",
+  "manifest_hash_match": "crlf_normalized",
+  "u_m_level": "UNSET",
+  "u_e_level": "UNSET",
+  "action": "PENDING",
+  "scanned_at_utc": "2026-11-20T16:03:03.723711+00:00"
+}

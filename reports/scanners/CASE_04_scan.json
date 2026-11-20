@@ -1,0 +1,25 @@
+{
+  "case_id": "CASE_04",
+  "file": "cases/CASE_04.java",
+  "file_hash": "7caa27b91f008938f6dd0453d14ccb08a41612fd7f5848ed99b7a0bfd7136ac3",
+  "hash_verified": true,
+  "hash_match": "crlf_normalized",
+  "cwe": "CWE-22",
+  "semgrep": {
+    "status": "finding",
+    "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+    "version": "1.185.0",
+    "matched_lines": "37-37",
+    "finding_count": 1
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/path-injection",
+    "version": "2.27.4",
+    "matched_lines": "47-47",
+    "finding_count": 1,
+    "other_findings": 1,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  }
+}

@@ -1,0 +1,382 @@
+{
+  "CASE_01": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "55-55",
+      "finding_count": 2
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/path-injection",
+      "version": "2.27.4",
+      "matched_lines": "55-55",
+      "finding_count": 1,
+      "other_findings": 2,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_02": {
+    "semgrep": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "1.185.0",
+      "matched_lines": null,
+      "finding_count": 0
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/path-injection",
+      "version": "2.27.4",
+      "matched_lines": "56-56",
+      "finding_count": 1,
+      "other_findings": 1,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_03": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe89.sql-injection-sink",
+      "version": "1.185.0",
+      "matched_lines": "40-40",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/sql-injection",
+      "version": "2.27.4",
+      "matched_lines": "40-40",
+      "finding_count": 1,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_04": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "37-37",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/path-injection",
+      "version": "2.27.4",
+      "matched_lines": "47-47",
+      "finding_count": 1,
+      "other_findings": 1,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_05": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe89.sql-injection-sink",
+      "version": "1.185.0",
+      "matched_lines": "42-42",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/sql-injection",
+      "version": "2.27.4",
+      "matched_lines": "42-42",
+      "finding_count": 1,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_06": {
+    "semgrep": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "1.185.0",
+      "matched_lines": null,
+      "finding_count": 0
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/sql-injection",
+      "version": "2.27.4",
+      "matched_lines": "37-37",
+      "finding_count": 1,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_07": {
+    "semgrep": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "1.185.0",
+      "matched_lines": null,
+      "finding_count": 0
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_08": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "61-61",
+      "finding_count": 2
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 1,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_09": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "62-62",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_10": {
+    "semgrep": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "1.185.0",
+      "matched_lines": null,
+      "finding_count": 0
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_11": {
+    "semgrep": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "1.185.0",
+      "matched_lines": null,
+      "finding_count": 0
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/concatenated-sql-query",
+      "version": "2.27.4",
+      "matched_lines": "61-61",
+      "finding_count": 1,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_12": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "55-55",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/path-injection",
+      "version": "2.27.4",
+      "matched_lines": "65-65",
+      "finding_count": 1,
+      "other_findings": 1,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_13": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe89.sql-injection-sink",
+      "version": "1.185.0",
+      "matched_lines": "37-37",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/sql-injection",
+      "version": "2.27.4",
+      "matched_lines": "37-37",
+      "finding_count": 1,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_14": {
+    "semgrep": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "1.185.0",
+      "matched_lines": null,
+      "finding_count": 0
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/sql-injection",
+      "version": "2.27.4",
+      "matched_lines": "41-41",
+      "finding_count": 1,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_15": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe89.sql-injection-sink",
+      "version": "1.185.0",
+      "matched_lines": "38-38",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_16": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe89.sql-injection-sink",
+      "version": "1.185.0",
+      "matched_lines": "37-37",
+      "finding_count": 1
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_17": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "104-104",
+      "finding_count": 2
+    },
+    "codeql": {
+      "status": "finding",
+      "rule_id": "java/path-injection",
+      "version": "2.27.4",
+      "matched_lines": "108-108",
+      "finding_count": 3,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_18": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "84-84",
+      "finding_count": 2
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_19": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "48-48",
+      "finding_count": 2
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  },
+  "CASE_20": {
+    "semgrep": {
+      "status": "finding",
+      "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+      "version": "1.185.0",
+      "matched_lines": "43-43",
+      "finding_count": 2
+    },
+    "codeql": {
+      "status": "no_finding",
+      "rule_id": null,
+      "version": "2.27.4",
+      "matched_lines": null,
+      "finding_count": 0,
+      "other_findings": 0,
+      "build_mode": "compile",
+      "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+    }
+  }
+}

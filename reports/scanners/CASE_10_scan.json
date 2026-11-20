@@ -1,0 +1,25 @@
+{
+  "case_id": "CASE_10",
+  "file": "cases/CASE_10.java",
+  "file_hash": "cdbec5adf694fee318785d0b44c8ef66640f6ecbe03f9221c8a405f0cd62a0a9",
+  "hash_verified": true,
+  "hash_match": "crlf_normalized",
+  "cwe": "CWE-89",
+  "semgrep": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "1.185.0",
+    "matched_lines": null,
+    "finding_count": 0
+  },
+  "codeql": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "2.27.4",
+    "matched_lines": null,
+    "finding_count": 0,
+    "other_findings": 0,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  }
+}

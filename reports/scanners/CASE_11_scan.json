@@ -1,0 +1,25 @@
+{
+  "case_id": "CASE_11",
+  "file": "cases/CASE_11.java",
+  "file_hash": "d1921f04d31091e391833aac72c6e3a8ecb4b7907e8b9bfe5a48f6990b5c405b",
+  "hash_verified": true,
+  "hash_match": "crlf_normalized",
+  "cwe": "CWE-89",
+  "semgrep": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "1.185.0",
+    "matched_lines": null,
+    "finding_count": 0
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/concatenated-sql-query",
+    "version": "2.27.4",
+    "matched_lines": "61-61",
+    "finding_count": 1,
+    "other_findings": 0,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  }
+}
