@@ -1,0 +1,34 @@
+{
+  "case_id": "CASE_02",
+  "variant_id": "CASE_02_A",
+  "evidence_condition": "A_COMPLETE",
+  "claim_id": "CLM_01",
+  "cwe": "CWE-22",
+  "claim": "possible_path_traversal",
+  "file": "cases/CASE_02.java",
+  "line_range": "48-54",
+  "semgrep": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "1.185.0",
+    "matched_lines": null,
+    "finding_count": 0
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/path-injection",
+    "version": "2.27.4",
+    "matched_lines": "56-56",
+    "finding_count": 1,
+    "other_findings": 1,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  },
+  "source_available": true,
+  "source_hash": "b6bd8c9039d32f56c6a5a6d0ee0a5f9fe9b5aca6f1b0f2e3408d2f2d208c3f32",
+  "manifest_hash_match": "crlf_normalized",
+  "u_m_level": "UNSET",
+  "u_e_level": "UNSET",
+  "action": "PENDING",
+  "scanned_at_utc": "2026-11-20T16:02:27.279363+00:00"
+}

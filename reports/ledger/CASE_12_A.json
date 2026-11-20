@@ -1,0 +1,34 @@
+{
+  "case_id": "CASE_12",
+  "variant_id": "CASE_12_A",
+  "evidence_condition": "A_COMPLETE",
+  "claim_id": "CLM_01",
+  "cwe": "CWE-22",
+  "claim": "possible_path_traversal",
+  "file": "cases/CASE_12.java",
+  "line_range": "1-40",
+  "semgrep": {
+    "status": "finding",
+    "rule_id": "scanners.caresec.java.cwe22.path-traversal-sink",
+    "version": "1.185.0",
+    "matched_lines": "55-55",
+    "finding_count": 1
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/path-injection",
+    "version": "2.27.4",
+    "matched_lines": "65-65",
+    "finding_count": 1,
+    "other_findings": 1,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  },
+  "source_available": true,
+  "source_hash": "4d71ec963a58906acdcf37e3231308ee4880d1c8dd16b60d44c540a644cb16f5",
+  "manifest_hash_match": "crlf_normalized",
+  "u_m_level": "UNSET",
+  "u_e_level": "UNSET",
+  "action": "PENDING",
+  "scanned_at_utc": "2026-11-20T16:02:55.008192+00:00"
+}

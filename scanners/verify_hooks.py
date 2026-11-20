@@ -8,6 +8,7 @@ from scanners.run import compute_sha256, run_semgrep
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 FORBIDDEN_TOKENS = ("truth_private", "hidden_truth", "case_manifest.csv")
+CASE_ID_RE = re.compile(r"^CASE_\d{2}$")
 
 
 def _guard_path(path: Path) -> None:
@@ -15,11 +16,23 @@ def _guard_path(path: Path) -> None:
     for token in FORBIDDEN_TOKENS:
         if token in resolved:
             raise PermissionError(f"Anti-leakage block: access to '{token}' is forbidden.")
+    # Hooks may only read the public case files, never anything else in the repo.
+    if not resolved.startswith(str(REPO_ROOT.resolve() / "cases").replace("\\", "/") + "/"):
+        raise PermissionError("Anti-leakage block: hooks may only read files under cases/.")
+
+
+def _case_path(case_id: str) -> Path:
+    """Resolve a case id to its source file, rejecting anything that is not ``CASE_NN``."""
+    cid = case_id.strip().upper()
+    if not CASE_ID_RE.match(cid):
+        raise ValueError(f"Invalid case_id '{case_id}': expected CASE_NN.")
+    java_path = REPO_ROOT / "cases" / f"{cid}.java"
+    _guard_path(java_path)
+    return java_path
 
 
 def fetch_code_slice(case_id: str, start_line: int, end_line: int) -> dict:
-    java_path = REPO_ROOT / "cases" / f"{case_id.strip().upper()}.java"
-    _guard_path(java_path)
+    java_path = _case_path(case_id)
     if not java_path.exists():
         return {"ok": False, "error": f"Source file not found for {case_id}"}
     lines = java_path.read_text(encoding="utf-8", errors="replace").splitlines()
@@ -37,8 +50,7 @@ def fetch_code_slice(case_id: str, start_line: int, end_line: int) -> dict:
 
 
 def inspect_enclosing_method(case_id: str, target_line: int) -> dict:
-    java_path = REPO_ROOT / "cases" / f"{case_id.strip().upper()}.java"
-    _guard_path(java_path)
+    java_path = _case_path(case_id)
     if not java_path.exists():
         return {"ok": False, "error": f"Source file not found for {case_id}"}
     lines = java_path.read_text(encoding="utf-8", errors="replace").splitlines()
@@ -60,8 +72,10 @@ def inspect_enclosing_method(case_id: str, target_line: int) -> dict:
 
 
 def rerun_pinned_semgrep(case_id: str, cwe: str) -> dict:
-    java_path = REPO_ROOT / "cases" / f"{case_id.strip().upper()}.java"
-    _guard_path(java_path)
+    """Re-run the pinned Semgrep rules on one case (read-only; no files written)."""
+    java_path = _case_path(case_id)
+    if not java_path.exists():
+        return {"ok": False, "error": f"Source file not found for {case_id}"}
     rules_path = Path(__file__).resolve().parent / "semgrep_rules.yaml"
     res = run_semgrep(java_path, cwe, rules_path)
     return {
@@ -71,3 +85,30 @@ def rerun_pinned_semgrep(case_id: str, cwe: str) -> dict:
         "source_hash": compute_sha256(java_path),
         "scanner_result": res,
     }
+
+
+# --------------------------------------------------------------------------- #
+# Dispatcher for Lane 5 (controller/)
+# --------------------------------------------------------------------------- #
+
+HOOKS = {
+    "fetch_code_slice": fetch_code_slice,
+    "inspect_enclosing_method": inspect_enclosing_method,
+    "rerun_pinned_semgrep": rerun_pinned_semgrep,
+}
+
+
+def call_hook(name: str, **kwargs) -> dict:
+    """Invoke a hook by name; every failure comes back as ``{"ok": False, ...}``.
+
+    The controller keeps the budget (max 2 calls per record); this only maps a
+    name to a function and turns exceptions into a result the controller can log,
+    so a bad argument never aborts a decision run.
+    """
+    hook = HOOKS.get(name)
+    if hook is None:
+        return {"ok": False, "hook": name, "error": f"Unknown hook '{name}'. Known: {sorted(HOOKS)}"}
+    try:
+        return hook(**kwargs)
+    except (ValueError, PermissionError, TypeError) as exc:
+        return {"ok": False, "hook": name, "error": f"{type(exc).__name__}: {exc}"}

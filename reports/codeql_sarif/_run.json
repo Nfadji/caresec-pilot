@@ -1,0 +1,80 @@
+{
+  "tool": "codeql",
+  "codeql_version": "2.27.4",
+  "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls",
+  "query_packs": [
+    {
+      "name": "CodeQL",
+      "version": "2.27.4"
+    },
+    {
+      "name": "codeql/java-queries",
+      "version": "1.12.0+1be292a1e54696ca543b4ad0f9b4537b9687caa7"
+    },
+    {
+      "name": "codeql/java-all",
+      "version": "9.3.4+1be292a1e54696ca543b4ad0f9b4537b9687caa7"
+    },
+    {
+      "name": "codeql/threat-models",
+      "version": "1.1.1+1be292a1e54696ca543b4ad0f9b4537b9687caa7"
+    }
+  ],
+  "started_utc": "2026-11-20T16:00:16.814121+00:00",
+  "finished_utc": "2026-11-20T16:00:37.792463+00:00",
+  "threads": 4,
+  "ram_mb": 6000,
+  "combined_sarif_sha256": "4d7ffcbec326fa6e42162e8ed57198a8486caa92fa1af3ea126f134331cb551e",
+  "results_per_case": {
+    "CASE_01": 3,
+    "CASE_02": 2,
+    "CASE_03": 1,
+    "CASE_04": 2,
+    "CASE_05": 1,
+    "CASE_06": 1,
+    "CASE_07": 0,
+    "CASE_08": 1,
+    "CASE_09": 0,
+    "CASE_10": 0,
+    "CASE_11": 1,
+    "CASE_12": 2,
+    "CASE_13": 1,
+    "CASE_14": 1,
+    "CASE_15": 0,
+    "CASE_16": 0,
+    "CASE_17": 3,
+    "CASE_18": 0,
+    "CASE_19": 0,
+    "CASE_20": 0
+  },
+  "build_mode": "compile",
+  "case_files": [
+    "org/owasp/benchmark/testcode/CASE_01.java",
+    "org/owasp/benchmark/testcode/CASE_02.java",
+    "org/owasp/benchmark/testcode/CASE_03.java",
+    "org/owasp/benchmark/testcode/CASE_04.java",
+    "org/owasp/benchmark/testcode/CASE_05.java",
+    "org/owasp/benchmark/testcode/CASE_06.java",
+    "org/owasp/benchmark/testcode/CASE_07.java",
+    "org/owasp/benchmark/testcode/CASE_08.java",
+    "org/owasp/benchmark/testcode/CASE_09.java",
+    "org/owasp/benchmark/testcode/CASE_10.java",
+    "org/owasp/benchmark/testcode/CASE_11.java",
+    "org/owasp/benchmark/testcode/CASE_12.java",
+    "testcases/CWE89_SQL_Injection/s02/CASE_13.java",
+    "testcases/CWE89_SQL_Injection/s02/CASE_14.java",
+    "testcases/CWE89_SQL_Injection/s02/CASE_15.java",
+    "testcases/CWE89_SQL_Injection/s02/CASE_16.java",
+    "testcases/CWE23_Relative_Path_Traversal/CASE_17.java",
+    "testcases/CWE23_Relative_Path_Traversal/CASE_18.java",
+    "testcases/CWE23_Relative_Path_Traversal/CASE_19.java",
+    "testcases/CWE23_Relative_Path_Traversal/CASE_20.java"
+  ],
+  "helper_files": 36,
+  "shim_files": [
+    "testcasesupport/AbstractTestCase.java",
+    "testcasesupport/AbstractTestCaseServlet.java"
+  ],
+  "juliet_jars": 4,
+  "maven_classpath_used": true
+}

@@ -1,0 +1,25 @@
+{
+  "case_id": "CASE_14",
+  "file": "cases/CASE_14.java",
+  "file_hash": "50f3d27f34bb277061604a40ae00b993f4d5e8ae096a57bc5b45bb7e9428a316",
+  "hash_verified": true,
+  "hash_match": "crlf_normalized",
+  "cwe": "CWE-89",
+  "semgrep": {
+    "status": "no_finding",
+    "rule_id": null,
+    "version": "1.185.0",
+    "matched_lines": null,
+    "finding_count": 0
+  },
+  "codeql": {
+    "status": "finding",
+    "rule_id": "java/sql-injection",
+    "version": "2.27.4",
+    "matched_lines": "41-41",
+    "finding_count": 1,
+    "other_findings": 0,
+    "build_mode": "compile",
+    "suite": "codeql/java-queries:codeql-suites/java-security-extended.qls"
+  }
+}

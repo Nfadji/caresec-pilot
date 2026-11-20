@@ -1,0 +1,578 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "CodeQL",
+          "organization": "GitHub",
+          "semanticVersion": "2.27.4",
+          "notifications": [
+            {
+              "id": "java/diagnostics/extraction-errors",
+              "name": "java/diagnostics/extraction-errors",
+              "shortDescription": {
+                "text": "Extraction errors"
+              },
+              "fullDescription": {
+                "text": "A list of extraction errors for files in the source code directory."
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              },
+              "properties": {
+                "description": "A list of extraction errors for files in the source code directory.",
+                "id": "java/diagnostics/extraction-errors",
+                "kind": "diagnostic",
+                "name": "Extraction errors"
+              }
+            },
+            {
+              "id": "java/diagnostics/extraction-warnings",
+              "name": "java/diagnostics/extraction-warnings",
+              "shortDescription": {
+                "text": "Extraction warnings"
+              },
+              "fullDescription": {
+                "text": "A list of extraction warnings for files in the source code directory."
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              },
+              "properties": {
+                "description": "A list of extraction warnings for files in the source code directory.",
+                "id": "java/diagnostics/extraction-warnings",
+                "kind": "diagnostic",
+                "name": "Extraction warnings"
+              }
+            },
+            {
+              "id": "java/diagnostics/successfully-extracted-files",
+              "name": "java/diagnostics/successfully-extracted-files",
+              "shortDescription": {
+                "text": "Extracted files"
+              },
+              "fullDescription": {
+                "text": "A list of all files in the source code directory that were extracted."
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              },
+              "properties": {
+                "tags": [
+                  "successfully-extracted-files"
+                ],
+                "description": "A list of all files in the source code directory that\n              were extracted.",
+                "id": "java/diagnostics/successfully-extracted-files",
+                "kind": "diagnostic",
+                "name": "Extracted files"
+              }
+            },
+            {
+              "id": "java/diagnostic/database-quality",
+              "name": "java/diagnostic/database-quality",
+              "shortDescription": {
+                "text": "Low Java analysis quality"
+              },
+              "fullDescription": {
+                "text": "Low Java analysis quality"
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              },
+              "properties": {
+                "description": "Low Java analysis quality",
+                "id": "java/diagnostic/database-quality",
+                "kind": "diagnostic",
+                "name": "Low Java analysis quality"
+              }
+            },
+            {
+              "id": "java/baseline/expected-extracted-files",
+              "name": "java/baseline/expected-extracted-files",
+              "shortDescription": {
+                "text": "Expected extracted files"
+              },
+              "fullDescription": {
+                "text": "Files appearing in the source archive that are expected to be extracted."
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              },
+              "properties": {
+                "tags": [
+                  "expected-extracted-files",
+                  "telemetry"
+                ]
+              }
+            },
+            {
+              "id": "cli/file-coverage-baseline",
+              "name": "cli/file-coverage-baseline",
+              "shortDescription": {
+                "text": "File coverage baseline telemetry"
+              },
+              "fullDescription": {
+                "text": "File coverage baseline telemetry"
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              }
+            },
+            {
+              "id": "cli/platform",
+              "name": "cli/platform",
+              "shortDescription": {
+                "text": "Platform"
+              },
+              "fullDescription": {
+                "text": "Platform"
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              }
+            },
+            {
+              "id": "java/extractor/summary",
+              "name": "java/extractor/summary",
+              "shortDescription": {
+                "text": "Java extractor telemetry"
+              },
+              "fullDescription": {
+                "text": "Java extractor telemetry"
+              },
+              "defaultConfiguration": {
+                "enabled": true
+              }
+            }
+          ],
+          "rules": []
+        },
+        "extensions": [
+          {
+            "name": "codeql/java-queries",
+            "semanticVersion": "1.12.0+1be292a1e54696ca543b4ad0f9b4537b9687caa7",
+            "rules": []
+          },
+          {
+            "name": "codeql/java-all",
+            "semanticVersion": "9.3.4+1be292a1e54696ca543b4ad0f9b4537b9687caa7",
+            "taxa": [
+              {
+                "id": "ext/javax.servlet.http.model.yml/0/2",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/javax.servlet.http.model.yml"
+                    },
+                    "region": {
+                      "startLine": 8,
+                      "startColumn": 9,
+                      "endLine": 8,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.net.model.yml/3/38",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.net.model.yml"
+                    },
+                    "region": {
+                      "startLine": 84,
+                      "startColumn": 9,
+                      "endLine": 84,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/0/23",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 29,
+                      "startColumn": 9,
+                      "endLine": 29,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/1/14",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 90,
+                      "startColumn": 9,
+                      "endLine": 90,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/0/20",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 26,
+                      "startColumn": 9,
+                      "endLine": 26,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/javax.servlet.http.model.yml/0/5",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/javax.servlet.http.model.yml"
+                    },
+                    "region": {
+                      "startLine": 11,
+                      "startColumn": 9,
+                      "endLine": 11,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.util.model.yml/1/128",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.util.model.yml"
+                    },
+                    "region": {
+                      "startLine": 141,
+                      "startColumn": 9,
+                      "endLine": 141,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/0/7",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 13,
+                      "startColumn": 9,
+                      "endLine": 13,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/javax.servlet.http.model.yml/0/3",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/javax.servlet.http.model.yml"
+                    },
+                    "region": {
+                      "startLine": 9,
+                      "startColumn": 9,
+                      "endLine": 9,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.net.model.yml/0/0",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.net.model.yml"
+                    },
+                    "region": {
+                      "startLine": 6,
+                      "startColumn": 9,
+                      "endLine": 6,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/1/40",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 120,
+                      "startColumn": 9,
+                      "endLine": 120,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/1/1",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 77,
+                      "startColumn": 9,
+                      "endLine": 77,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/1/2",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 78,
+                      "startColumn": 9,
+                      "endLine": 78,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/0/9",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 15,
+                      "startColumn": 9,
+                      "endLine": 15,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/org.owasp.esapi.model.yml/2/0",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/org.owasp.esapi.model.yml"
+                    },
+                    "region": {
+                      "startLine": 42,
+                      "startColumn": 9,
+                      "endLine": 42,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/0/65",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 71,
+                      "startColumn": 9,
+                      "endLine": 71,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/javax.servlet.model.yml/0/1",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/javax.servlet.model.yml"
+                    },
+                    "region": {
+                      "startLine": 7,
+                      "startColumn": 9,
+                      "endLine": 7,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/0/58",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 64,
+                      "startColumn": 9,
+                      "endLine": 64,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.io.model.yml/1/24",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.io.model.yml"
+                    },
+                    "region": {
+                      "startLine": 104,
+                      "startColumn": 9,
+                      "endLine": 104,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.sql.model.yml/0/0",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.sql.model.yml"
+                    },
+                    "region": {
+                      "startLine": 6,
+                      "startColumn": 9,
+                      "endLine": 6,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.sql.model.yml/0/13",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.sql.model.yml"
+                    },
+                    "region": {
+                      "startLine": 19,
+                      "startColumn": 9,
+                      "endLine": 19,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.sql.model.yml/0/1",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.sql.model.yml"
+                    },
+                    "region": {
+                      "startLine": 7,
+                      "startColumn": 9,
+                      "endLine": 7,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.sql.model.yml/0/10",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.sql.model.yml"
+                    },
+                    "region": {
+                      "startLine": 16,
+                      "startColumn": 9,
+                      "endLine": 16,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.lang.model.yml/2/59",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.lang.model.yml"
+                    },
+                    "region": {
+                      "startLine": 122,
+                      "startColumn": 9,
+                      "endLine": 122,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              },
+              {
+                "id": "ext/java.sql.model.yml/0/9",
+                "properties": {
+                  "CodeQL/DataExtensionLocation": {
+                    "artifactLocation": {
+                      "uri": "ext/java.sql.model.yml"
+                    },
+                    "region": {
+                      "startLine": 15,
+                      "startColumn": 9,
+                      "endLine": 15,
+                      "endColumn": 9
+                    }
+                  }
+                }
+              }
+            ],
+            "rules": []
+          },
+          {
+            "name": "codeql/threat-models",
+            "semanticVersion": "1.1.1+1be292a1e54696ca543b4ad0f9b4537b9687caa7",
+            "rules": []
+          }
+        ]
+      },
+      "results": [],
+      "automationDetails": {
+        "id": "caresec-pilot/codeql/CASE_19"
+      }
+    }
+  ]
+}

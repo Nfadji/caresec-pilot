@@ -4,3 +4,12 @@ __pycache__/
 reports/*.log
 /truth_private/
 /manifests/case_manifest.csv
+# Keep raw Semgrep results local
+/scanners/semgrep_all20.json
+/scanners/semgrep_first5.json/variants/*_local.json
+/variants/*_local.json 
+/scanners/semgrep_first5.json 
+# Lane 3: CodeQL scratch (source tree, database, combined SARIF) and partial indexes
+/reports/codeql_work/
+/reports/codeql_build.out
+/reports/ledger/scanner_evidence_partial.json

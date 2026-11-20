@@ -1,0 +1,5 @@
+# Lane 3 pinned scanner toolchain. Install with: pip install -r scanners/requirements.txt
+# CodeQL CLI is not on PyPI: use the 2.27.4 bundle (https://github.com/github/codeql-cli-binaries/releases)
+# and put `codeql` on PATH. A JDK 17 is needed for the compile build mode.
+semgrep==1.185.0
+pytest>=8
