@@ -10,6 +10,7 @@ import argparse
 import csv
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -31,7 +32,9 @@ def load_manifest(repo_root: Path) -> list[dict]:
     manifest_path = public_manifest if public_manifest.exists() else private_manifest
     if not manifest_path.exists():
         raise FileNotFoundError(f"Could not find manifest at {public_manifest} or {private_manifest}.")
-    with manifest_path.open("r", newline="", encoding="utf-8") as f:
+    # utf-8-sig: the public manifest is saved with a UTF-8 BOM, which would otherwise
+    # turn the first column name into "\ufeffcase_id".
+    with manifest_path.open("r", newline="", encoding="utf-8-sig") as f:
         return list(csv.DictReader(f))
 
 
@@ -44,13 +47,36 @@ def get_tool_version(cmd: list[str]) -> str | None:
         return None
 
 
+def verify_hash(actual_hash: str, recorded_hash: str, file_bytes: bytes) -> str:
+    """Compare a file's hash with the manifest, tolerating a line-ending swap.
+
+    Returns ``"exact"``, ``"crlf_normalized"`` (the manifest hash matches the
+    same bytes with the other line ending, which happens when the manifest was
+    computed on a Windows checkout and git stores LF) or ``"mismatch"``.
+    """
+    recorded = recorded_hash.strip().lower()
+    if actual_hash == recorded:
+        return "exact"
+    lf = file_bytes.replace(b"\r\n", b"\n")
+    for candidate in (lf, lf.replace(b"\n", b"\r\n")):
+        if hashlib.sha256(candidate).hexdigest() == recorded:
+            return "crlf_normalized"
+    return "mismatch"
+
+
+# Tokens that identify a finding as belonging to one of the two pilot CWEs.
+# They are matched against rule ids, rule tags (SARIF ``external/cwe/cwe-089``)
+# and Semgrep metadata, all lower-cased.
+CWE_TOKENS = {
+    "CWE-89": ("cwe-89", "cwe-089", "cwe89", "sqli", "sql-injection", "sql_injection"),
+    "CWE-22": ("cwe-22", "cwe-022", "cwe22", "cwe-23", "cwe-023", "path-traversal", "path_traversal",
+               "path-injection", "tainted-file", "tainted-path"),
+}
+
+
 def match_cwe(text: str, target_cwe: str) -> bool:
     lower = text.lower()
-    if target_cwe == "CWE-89":
-        return any(tok in lower for tok in ("cwe-89", "cwe89", "sqli", "sql-injection", "sql_injection"))
-    if target_cwe == "CWE-22":
-        return any(tok in lower for tok in ("cwe-22", "cwe22", "cwe-23", "path-traversal", "path_traversal", "tainted-file"))
-    return False
+    return any(tok in lower for tok in CWE_TOKENS.get(target_cwe, ()))
 
 
 def run_semgrep(java_path: Path, target_cwe: str, local_rules: Path) -> dict:
@@ -86,18 +112,49 @@ def run_semgrep(java_path: Path, target_cwe: str, local_rules: Path) -> dict:
         return {"status": "tool_failed", "rule_id": None, "version": version, "error": str(exc)[:300]}
 
 
+def sarif_rule_index(run: dict) -> dict[str, dict]:
+    """Map rule id -> rule object across the SARIF driver and its extensions."""
+    tool = run.get("tool", {})
+    rules: dict[str, dict] = {}
+    for comp in [tool.get("driver", {})] + tool.get("extensions", []):
+        for rule in comp.get("rules", []):
+            if rule.get("id"):
+                rules[rule["id"]] = rule
+    return rules
+
+
+def codeql_result_matches(result: dict, rules: dict[str, dict], target_cwe: str) -> bool:
+    """A CodeQL result counts for ``target_cwe`` if its rule id or the rule's CWE tags say so.
+
+    CodeQL names its rules by sink (``java/path-injection``), not by CWE, and
+    puts the CWE in ``properties.tags`` as ``external/cwe/cwe-022``; the tags are
+    the reliable signal.
+    """
+    rule_id = result.get("ruleId", "")
+    tags = rules.get(rule_id, {}).get("properties", {}).get("tags", [])
+    return match_cwe(" ".join([rule_id, *tags]), target_cwe)
+
+
 def run_codeql(java_path: Path, target_cwe: str, sarif_dir: Path) -> dict:
+    """Read the per-case SARIF written by ``scanners.codeql_build`` and normalize it."""
     codeql_bin = shutil.which("codeql")
     version = get_tool_version(["codeql", "version", "--format=terse"]) if codeql_bin else None
     sarif_file = sarif_dir / f"{java_path.stem}.sarif"
+    run_record = sarif_dir / "_run.json"
     if sarif_file.exists():
         try:
             sarif = json.loads(sarif_file.read_text(encoding="utf-8"))
             runs = sarif.get("runs", [])
             if runs:
-                tool_ver = runs[0].get("tool", {}).get("driver", {}).get("semanticVersion") or version or "unknown"
-                results = runs[0].get("results", [])
-                matched = [r for r in results if match_cwe(r.get("ruleId", ""), target_cwe)]
+                run = runs[0]
+                tool_ver = run.get("tool", {}).get("driver", {}).get("semanticVersion") or version or "unknown"
+                extra = {}
+                if run_record.exists():
+                    rec = json.loads(run_record.read_text(encoding="utf-8"))
+                    extra = {"build_mode": rec.get("build_mode"), "suite": rec.get("suite")}
+                rules = sarif_rule_index(run)
+                results = run.get("results", [])
+                matched = [r for r in results if codeql_result_matches(r, rules, target_cwe)]
                 if matched:
                     top = matched[0]
                     loc = top.get("locations", [{}])[0].get("physicalLocation", {}).get("region", {})
@@ -109,15 +166,19 @@ def run_codeql(java_path: Path, target_cwe: str, sarif_dir: Path) -> dict:
                         "version": tool_ver,
                         "matched_lines": f"{s_line}-{e_line}" if s_line else None,
                         "finding_count": len(matched),
+                        "other_findings": len(results) - len(matched),
+                        **extra,
                     }
-                return {"status": "no_finding", "rule_id": None, "version": tool_ver, "matched_lines": None, "finding_count": 0}
+                return {"status": "no_finding", "rule_id": None, "version": tool_ver, "matched_lines": None,
+                        "finding_count": 0, "other_findings": len(results), **extra}
         except Exception as exc:
             return {"status": "tool_failed", "rule_id": None, "version": version, "error": f"Failed parsing SARIF: {exc}"}
     reason = "CodeQL CLI not found in PATH." if not codeql_bin else f"No SARIF found at {sarif_file}."
     return {"status": "tool_failed", "rule_id": None, "version": version, "error": reason}
 
 
-def build_base_ledger_record(row: dict, semgrep_res: dict, codeql_res: dict, actual_hash: str) -> dict:
+def build_base_ledger_record(row: dict, semgrep_res: dict, codeql_res: dict, actual_hash: str,
+                             hash_match: str = "exact") -> dict:
     cwe = row["CWE"].strip()
     claim_map = {"CWE-89": "possible_sql_injection", "CWE-22": "possible_path_traversal"}
     return {
@@ -133,6 +194,7 @@ def build_base_ledger_record(row: dict, semgrep_res: dict, codeql_res: dict, act
         "codeql": codeql_res,
         "source_available": True,
         "source_hash": actual_hash,
+        "manifest_hash_match": hash_match,
         "u_m_level": "UNSET",
         "u_e_level": "UNSET",
         "action": "PENDING",
@@ -168,10 +230,14 @@ def main() -> None:
     scan_out_dir.mkdir(parents=True, exist_ok=True)
     ledger_out_dir.mkdir(parents=True, exist_ok=True)
 
+    # Semgrep CE phones home by default; keep pilot runs offline and reproducible.
+    os.environ.setdefault("SEMGREP_SEND_METRICS", "off")
+
     print(f"Running static scanners on {len(selected)} case(s)...\n")
-    print(f"{'CASE_ID':<9} {'CWE':<8} {'SEMGREP':<14} {'CODEQL':<14} {'HASH_OK'}")
+    print(f"{'CASE_ID':<9} {'CWE':<8} {'SEMGREP':<14} {'CODEQL':<14} {'HASH'}")
     print("-" * 58)
 
+    evidence_index: dict[str, dict] = {}
     for row in selected:
         cid = row["case_id"].strip()
         java_path = repo_root / Path(row["source_path"].strip())
@@ -179,23 +245,30 @@ def main() -> None:
             print(f"[ERROR] Missing Java file: {java_path}")
             continue
         actual_hash = compute_sha256(java_path)
-        hash_ok = actual_hash == row["file_hash"].strip()
+        hash_match = verify_hash(actual_hash, row["file_hash"], java_path.read_bytes())
         semgrep_res = run_semgrep(java_path, row["CWE"].strip(), args.rules)
         codeql_res = run_codeql(java_path, row["CWE"].strip(), sarif_dir)
 
         (scan_out_dir / f"{cid}_scan.json").write_text(json.dumps({
             "case_id": cid, "file": row["source_path"].strip(), "file_hash": actual_hash,
-            "hash_verified": hash_ok, "cwe": row["CWE"].strip(), "semgrep": semgrep_res, "codeql": codeql_res,
+            "hash_verified": hash_match != "mismatch", "hash_match": hash_match,
+            "cwe": row["CWE"].strip(), "semgrep": semgrep_res, "codeql": codeql_res,
         }, indent=2) + "\n", encoding="utf-8")
 
         (ledger_out_dir / f"{cid}_A.json").write_text(
-            json.dumps(build_base_ledger_record(row, semgrep_res, codeql_res, actual_hash), indent=2) + "\n",
+            json.dumps(build_base_ledger_record(row, semgrep_res, codeql_res, actual_hash, hash_match), indent=2) + "\n",
             encoding="utf-8",
         )
-        print(f"{cid:<9} {row['CWE'].strip():<8} {semgrep_res['status']:<14} {codeql_res['status']:<14} {str(hash_ok)}")
+        evidence_index[cid] = {"semgrep": semgrep_res, "codeql": codeql_res}
+        print(f"{cid:<9} {row['CWE'].strip():<8} {semgrep_res['status']:<14} {codeql_res['status']:<14} {hash_match}")
+
+    # One object keyed by case_id: the shape ``variants.build --scanner-json`` consumes.
+    index_path = ledger_out_dir / ("scanner_evidence.json" if args.all else "scanner_evidence_partial.json")
+    index_path.write_text(json.dumps(evidence_index, indent=2) + "\n", encoding="utf-8")
 
     print(f"\n[DONE] Saved normalized scan outputs to {scan_out_dir}")
     print(f"[DONE] Saved Condition A ledger records to {ledger_out_dir}")
+    print(f"[DONE] Saved scanner evidence index to {index_path}")
 
 
 if __name__ == "__main__":
