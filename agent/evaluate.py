@@ -357,3 +357,69 @@ def evaluate_variant(variant_id: str) -> dict:
 
 
     }
+
+def main() -> None:
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(
+        description="CARE-SEC Lane 4: Structured LLM triage"
+    )
+
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument("--variant", type=str, help="Evaluate one variant")
+    group.add_argument("--starter", action="store_true",
+                       help="Evaluate the first five available variants")
+    group.add_argument("--all", action="store_true",
+                       help="Evaluate all available variants")
+
+    args = parser.parse_args()
+
+    if args.variant:
+        variant_ids = [args.variant]
+    else:
+        variant_ids = sorted(
+            path.stem for path in LEDGER_DIR.glob("CASE_*_A.json")
+            if path.is_file()
+        )
+        if args.starter:
+            variant_ids = variant_ids[:5]
+
+    if not variant_ids:
+        parser.error("No matching Evidence Ledger records found.")
+
+    output_dir = REPO_ROOT / "reports" / "agent"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    failures = 0
+
+    for variant_id in variant_ids:
+        try:
+            result = evaluate_variant(variant_id)
+
+            output_path = output_dir / f"{variant_id}_assessment.json"
+            output_path.write_text(
+                json.dumps(result, indent=2) + "\n",
+                encoding="utf-8"
+            )
+
+            print(
+                f"{variant_id}: {result['assessment_status']} "
+                f"| verdict={result['verdict']}"
+            )
+
+        except (OSError, ValueError, KeyError, TypeError) as error:
+            failures += 1
+            print(f"[ERROR] {variant_id}: {error}", file=sys.stderr)
+
+    print(
+        f"\nCompleted: {len(variant_ids) - failures}/"
+        f"{len(variant_ids)} assessments written."
+    )
+
+    if failures:
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
