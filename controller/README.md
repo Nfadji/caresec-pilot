@@ -14,7 +14,7 @@ decision. Every step is logged. Nothing here reads `truth_private/` or hidden la
 | `python -m controller.decide --starter` | CASE_01–CASE_05, condition A |
 | `python -m controller.decide --all --conditions ABCD` | All 80 observation records |
 | `... --um LOW` | Demo only: overrides u_M while Lane 4 output is missing. Logged as `cli_override` |
-| `... --update-ledger` | Also writes `u_m_level`, `u_e_level`, `action` and `decision_trace` into `reports/ledger/<VARIANT>.json` |
+| `... --no-ledger` | Skips filling `u_m_level`, `u_e_level`, `action` and `decision_trace` in `reports/ledger/<VARIANT>.json` (filled by default) |
 | `... --no-write` | Prints the decisions without writing files |
 | `python -m pytest tests/test_controller.py -q` | Unit tests (hooks are faked, so no scanners are needed) |
 
@@ -56,6 +56,10 @@ verdict that contradicts both scanners. u_E is LOW with 0 gaps, MEDIUM with 1 an
 - a `decision` block with `u_m_source`, the initial and final gaps, `verify_calls`, the per-step `trace` (hook, arguments and result), `evidence_collected` and a timestamp.
 
 `reports/controller/summary.md` has one row per record.
+
+The Evidence Ledger records (`reports/ledger/<CASE>_A.json`) are also updated in place: the
+`u_m_level`, `u_e_level` and `action` fields that Lane 3 leaves for Lanes 4–5 are filled in, and
+`decision_trace` and `decision_policy` are added. Scanner evidence in the ledger is never changed.
 
 ## Status and dependencies (Nov 25)
 

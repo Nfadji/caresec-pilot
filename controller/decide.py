@@ -16,7 +16,8 @@ Inputs (read-only):
 Output:
     reports/controller/<VARIANT>.json         ledger record + u_m_level, u_e_level, action, decision trace
     reports/controller/summary.md             one-row-per-record table
-    (--update-ledger also writes action/u-levels/trace back into reports/ledger/<VARIANT>.json)
+    reports/ledger/<VARIANT>.json             u_m_level, u_e_level, action and decision_trace filled in
+                                              (condition A records; skip with --no-ledger)
 
 Policy (pilot deck, slide 17; rule-based engineering baseline, not calibrated):
     1. u_M HIGH                                   -> ESCALATE (more evidence cannot fix model competence)
@@ -419,8 +420,8 @@ def main(argv: list[str] | None = None) -> int:
     g.add_argument("--all", action="store_true", help="All cases in reports/ledger")
     p.add_argument("--conditions", default="A", help="Conditions for --starter/--all, e.g. ABCD (default A)")
     p.add_argument("--um", choices=LEVELS, help="Override u_M for demos when Lane 4 output is missing (logged)")
-    p.add_argument("--update-ledger", action="store_true",
-                   help="Also write action/u-levels/trace into reports/ledger/<VARIANT>.json when it exists")
+    p.add_argument("--no-ledger", action="store_true",
+                   help="Do not fill u_m_level/u_e_level/action/decision_trace in reports/ledger/<VARIANT>.json")
     p.add_argument("--no-write", action="store_true", help="Print decisions only")
     args = p.parse_args(argv)
 
@@ -451,7 +452,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         (OUT_DIR / f"{vid}.json").write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
         ledger_path = LEDGER_DIR / f"{vid}.json"
-        if args.update_ledger and ledger_path.is_file():
+        if not args.no_ledger and ledger_path.is_file():
             ledger = _read_json(ledger_path)
             ledger.update({"u_m_level": out["u_m_level"], "u_e_level": out["u_e_level"],
                            "action": out["action"], "decision_trace": d["trace"],
