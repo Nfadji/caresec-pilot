@@ -28,7 +28,18 @@
   "source_hash": "f923a86dd426bc219eb8dd73f86483ad5d532998ad55b8e62d2b73f44b93162d",
   "manifest_hash_match": "crlf_normalized",
   "u_m_level": "UNSET",
-  "u_e_level": "UNSET",
-  "action": "PENDING",
-  "scanned_at_utc": "2026-11-20T16:02:29.745956+00:00"
+  "u_e_level": "LOW",
+  "action": "ESCALATE",
+  "scanned_at_utc": "2026-11-20T16:02:29.745956+00:00",
+  "decision_trace": [
+    {
+      "step": 1,
+      "u_m_level": "UNSET",
+      "u_e_level": "LOW",
+      "evidence_gaps": [],
+      "action": "ESCALATE",
+      "reason": "evidence complete but no validated model assessment (u_M UNSET)"
+    }
+  ],
+  "decision_policy": "lane5-rules-v1"
 }

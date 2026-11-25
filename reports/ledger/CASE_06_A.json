@@ -28,7 +28,56 @@
   "source_hash": "a6e7d3ae8febf361b5ff397efeea11c8bdb2f64ed4a0ebe931ae7d0cafb24287",
   "manifest_hash_match": "crlf_normalized",
   "u_m_level": "UNSET",
-  "u_e_level": "UNSET",
-  "action": "PENDING",
-  "scanned_at_utc": "2026-11-20T16:02:39.035021+00:00"
+  "u_e_level": "MEDIUM",
+  "action": "ESCALATE",
+  "scanned_at_utc": "2026-11-20T16:02:39.035021+00:00",
+  "decision_trace": [
+    {
+      "step": 1,
+      "u_m_level": "UNSET",
+      "u_e_level": "MEDIUM",
+      "evidence_gaps": [
+        "scanner_conflict"
+      ],
+      "action": "VERIFY",
+      "reason": "bounded read-only check available for: scanner_conflict",
+      "target_gap": "scanner_conflict",
+      "hook": "rerun_pinned_semgrep",
+      "hook_args": {
+        "case_id": "CASE_06",
+        "cwe": "CWE-89"
+      },
+      "hook_ok": true,
+      "hook_result": "semgrep rerun -> no_finding (rule=None, v1.185.0)"
+    },
+    {
+      "step": 2,
+      "u_m_level": "UNSET",
+      "u_e_level": "MEDIUM",
+      "evidence_gaps": [
+        "scanner_conflict"
+      ],
+      "action": "VERIFY",
+      "reason": "bounded read-only check available for: scanner_conflict",
+      "target_gap": "scanner_conflict",
+      "hook": "inspect_enclosing_method",
+      "hook_args": {
+        "case_id": "CASE_06",
+        "target_line": 37
+      },
+      "hook_ok": true,
+      "hook_result": "enclosing method lines 22-50 attached for reviewer"
+    },
+    {
+      "step": 3,
+      "u_m_level": "UNSET",
+      "u_e_level": "MEDIUM",
+      "evidence_gaps": [
+        "scanner_conflict"
+      ],
+      "action": "ESCALATE",
+      "reason": "verification budget (2) exhausted; unresolved: scanner_conflict"
+    }
+  ],
+  "decision_policy": "lane5-rules-v1"
 }
