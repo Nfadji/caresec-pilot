@@ -28,7 +28,56 @@
   "source_hash": "e2bd91079047e04652297b0543d642a32a4718d2d19ca60e4c90464b80a653f7",
   "manifest_hash_match": "crlf_normalized",
   "u_m_level": "UNSET",
-  "u_e_level": "UNSET",
-  "action": "PENDING",
-  "scanned_at_utc": "2026-11-20T16:03:03.723711+00:00"
+  "u_e_level": "MEDIUM",
+  "action": "ESCALATE",
+  "scanned_at_utc": "2026-11-20T16:03:03.723711+00:00",
+  "decision_trace": [
+    {
+      "step": 1,
+      "u_m_level": "UNSET",
+      "u_e_level": "MEDIUM",
+      "evidence_gaps": [
+        "scanner_conflict"
+      ],
+      "action": "VERIFY",
+      "reason": "bounded read-only check available for: scanner_conflict",
+      "target_gap": "scanner_conflict",
+      "hook": "rerun_pinned_semgrep",
+      "hook_args": {
+        "case_id": "CASE_15",
+        "cwe": "CWE-89"
+      },
+      "hook_ok": true,
+      "hook_result": "semgrep rerun -> finding (rule=scanners.caresec.java.cwe89.sql-injection-sink, v1.185.0)"
+    },
+    {
+      "step": 2,
+      "u_m_level": "UNSET",
+      "u_e_level": "MEDIUM",
+      "evidence_gaps": [
+        "scanner_conflict"
+      ],
+      "action": "VERIFY",
+      "reason": "bounded read-only check available for: scanner_conflict",
+      "target_gap": "scanner_conflict",
+      "hook": "inspect_enclosing_method",
+      "hook_args": {
+        "case_id": "CASE_15",
+        "target_line": 38
+      },
+      "hook_ok": true,
+      "hook_result": "enclosing method lines 21-57 attached for reviewer"
+    },
+    {
+      "step": 3,
+      "u_m_level": "UNSET",
+      "u_e_level": "MEDIUM",
+      "evidence_gaps": [
+        "scanner_conflict"
+      ],
+      "action": "ESCALATE",
+      "reason": "verification budget (2) exhausted; unresolved: scanner_conflict"
+    }
+  ],
+  "decision_policy": "lane5-rules-v1"
 }
