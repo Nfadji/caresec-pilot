@@ -65,22 +65,28 @@ against the cases. The shims keep the package and `runTest` entry point.
 
 ## Verification hooks (Lane 3 → Lane 5)
 
-`scanners/verify_hooks.py` exposes three read-only hooks and a dispatcher:
+`scanners/verify_hooks.py` exposes four read-only hooks and a dispatcher:
 
 ```python
 from scanners.verify_hooks import call_hook
 call_hook("fetch_code_slice", case_id="CASE_01", start_line=48, end_line=54)
 call_hook("inspect_enclosing_method", case_id="CASE_01", target_line=55)
 call_hook("rerun_pinned_semgrep", case_id="CASE_01", cwe="CWE-22")
+call_hook("reload_codeql_sarif", case_id="CASE_01", cwe="CWE-22")
 ```
 
 Every result is a dict with `ok`; failures (unknown hook, bad arguments, blocked
 path) come back as `{"ok": False, "error": ...}` instead of raising, so a bad
 call costs the controller one budget unit but never aborts a run. Hooks accept
-only `CASE_NN` ids and only read under `cases/`; `truth_private/`,
+only `CASE_NN` ids and only read under `cases/` (`reload_codeql_sarif` also reads that
+case's stored `reports/codeql_sarif/<CASE>.sarif`); `truth_private/`,
 `hidden_truth` and `case_manifest.csv` are blocked by name as well. The
 controller owns the two-call budget (`tests/test_scanners.py` has a loop
 simulation).
+
+`reload_codeql_sarif` does not run CodeQL again. It re-reads the stored SARIF and returns
+the same normalized result Lane 3 recorded (status, rule id, version), plus the SARIF hash
+and the current source hash, so Lane 5 can recover CodeQL evidence in conditions B and D.
 
 ## Known issues for other lanes
 

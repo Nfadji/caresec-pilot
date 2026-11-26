@@ -225,6 +225,37 @@ def test_bounded_verification_loop_simulation():
     assert {c["source_hash"] for c in calls} == {calls[0]["source_hash"]}  # same file, same hash
 
 
+def test_reload_codeql_sarif_matches_the_stored_scan():
+    """The hook must return exactly what Lane 3 recorded for every case (no CodeQL needed)."""
+    ledger_dir = REPO_ROOT / "reports" / "ledger"
+    records = sorted(ledger_dir.glob("CASE_*_A.json"))
+    assert len(records) == 20
+    for path in records:
+        rec = json.loads(path.read_text(encoding="utf-8"))
+        res = verify_hooks.call_hook("reload_codeql_sarif", case_id=rec["case_id"], cwe=rec["cwe"])
+        assert res["ok"] and res["hook"] == "reload_codeql_sarif"
+        assert res["scanner_result"] == rec["codeql"]
+        assert res["source_hash"] == rec["source_hash"]
+        assert res["sarif_file"] == f"reports/codeql_sarif/{rec['case_id']}.sarif"
+        assert len(res["sarif_hash"]) == 64
+
+
+def test_reload_codeql_sarif_reports_missing_and_blocks_bad_ids(tmp_path, monkeypatch):
+    missing = verify_hooks.call_hook("reload_codeql_sarif", case_id="CASE_99", cwe="CWE-89")
+    assert missing == {"ok": False, "error": "Source file not found for CASE_99"}
+
+    for bad in ("../truth_private/hidden_truth", "CASE_01/../../README", "CASE_1", ""):
+        res = verify_hooks.call_hook("reload_codeql_sarif", case_id=bad, cwe="CWE-89")
+        assert res["ok"] is False and "ValueError" in res["error"]
+
+    # A case with source but no stored SARIF is a failed check, not a crash.
+    monkeypatch.setattr(verify_hooks, "REPO_ROOT", tmp_path)
+    (tmp_path / "cases").mkdir()
+    (tmp_path / "cases" / "CASE_01.java").write_text("class A {}\n", encoding="utf-8")
+    res = verify_hooks.call_hook("reload_codeql_sarif", case_id="CASE_01", cwe="CWE-22")
+    assert res["ok"] is False and "No stored CodeQL SARIF" in res["error"]
+
+
 @pytest.mark.skipif(__import__("shutil").which("semgrep") is None, reason="semgrep not installed")
 def test_rerun_pinned_semgrep_live():
     res = verify_hooks.call_hook("rerun_pinned_semgrep", case_id="CASE_03", cwe="CWE-89")

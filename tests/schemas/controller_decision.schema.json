@@ -1,0 +1,163 @@
+{
+  "title": "One Lane 5 decision, reports/controller/<VARIANT>.json",
+  "description": "DRAFT 2026-11-25, proposed by Lane 6 from what the code on main writes today. Not frozen: the team freezes it at the Week 1 checkpoint. Only the fields the evaluation reads are required; other fields are allowed.",
+  "type": "object",
+  "required": [
+    "case_id",
+    "variant_id",
+    "cwe",
+    "u_m_level",
+    "u_e_level",
+    "action",
+    "decision"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^CASE_[0-9]{2}$"
+    },
+    "variant_id": {
+      "type": "string",
+      "pattern": "^CASE_[0-9]{2}_[A-D]$"
+    },
+    "cwe": {
+      "type": "string",
+      "enum": [
+        "CWE-22",
+        "CWE-89"
+      ]
+    },
+    "u_m_level": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "UNSET"
+      ]
+    },
+    "u_e_level": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "UNSET"
+      ]
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "PROCEED",
+        "ESCALATE"
+      ]
+    },
+    "conclusion": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        "VULNERABLE",
+        "NOT_VULNERABLE",
+        null
+      ]
+    },
+    "decision": {
+      "type": "object",
+      "required": [
+        "policy_version",
+        "u_m_source",
+        "verify_calls",
+        "max_verify_calls",
+        "trace"
+      ],
+      "properties": {
+        "policy_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "u_m_source": {
+          "type": "string",
+          "enum": [
+            "lane4",
+            "unset",
+            "cli_override"
+          ]
+        },
+        "verify_calls": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2
+        },
+        "max_verify_calls": {
+          "const": 2
+        },
+        "trace": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "required": [
+              "step",
+              "u_m_level",
+              "u_e_level",
+              "evidence_gaps",
+              "action",
+              "reason"
+            ],
+            "properties": {
+              "step": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "u_m_level": {
+                "type": "string",
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "UNSET"
+                ]
+              },
+              "u_e_level": {
+                "type": "string",
+                "enum": [
+                  "LOW",
+                  "MEDIUM",
+                  "HIGH",
+                  "UNSET"
+                ]
+              },
+              "evidence_gaps": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "action": {
+                "type": "string",
+                "enum": [
+                  "PROCEED",
+                  "VERIFY",
+                  "ESCALATE"
+                ]
+              },
+              "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "hook": {
+                "type": "string"
+              },
+              "hook_ok": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
