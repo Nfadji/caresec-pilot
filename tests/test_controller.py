@@ -164,3 +164,45 @@ def test_controller_never_reads_hidden_truth(monkeypatch):
     monkeypatch.setattr("builtins.open", spy)
     ctl.load_record("CASE_01_C")
     assert not any("truth_private" in p or "hidden_truth" in p for p in opened)
+
+
+def test_bcd_do_not_inherit_condition_a_decision(monkeypatch, tmp_path):
+    a = record(variant_id="CASE_02_A", u_m_level="LOW", u_e_level="MEDIUM", action="ESCALATE",
+               decision_trace=[{"hook_result": "semgrep rerun -> no_finding"}],
+               decision_policy="lane5-rules-v1", decision_u_m_source="lane4")
+    a["case_id"] = "CASE_02"
+    (tmp_path / "CASE_02_A.json").write_text(json.dumps(a), encoding="utf-8")
+    monkeypatch.setattr(ctl, "LEDGER_DIR", tmp_path)
+    monkeypatch.setattr(ctl, "_lane2_variants", lambda: (
+        {"record_id": "CASE_02_B", "evidence": {}, "variant_status": "ready", "masked_fields": ["semgrep"]},))
+    b = ctl.load_record("CASE_02_B")
+    assert not {"decision_trace", "decision_policy", "decision_u_m_source"} & set(b)
+    assert (b["u_m_level"], b["u_e_level"], b["action"]) == ("UNSET", "UNSET", "PENDING")
+
+
+def test_um_override_never_writes_the_ledger(monkeypatch, tmp_path):
+    ledger = tmp_path / "ledger"
+    ledger.mkdir()
+    rec = record(u_m_level="UNSET", u_e_level="UNSET", action="PENDING")
+    (ledger / "CASE_03_A.json").write_text(json.dumps(rec), encoding="utf-8")
+    before = (ledger / "CASE_03_A.json").read_text(encoding="utf-8")
+    monkeypatch.setattr(ctl, "LEDGER_DIR", ledger)
+    monkeypatch.setattr(ctl, "OUT_DIR", tmp_path / "out")
+    monkeypatch.setattr(ctl, "AGENT_DIR", tmp_path / "agent")
+    monkeypatch.setattr(ctl, "_default_hook", lambda: FakeHooks())
+    monkeypatch.setattr(ctl, "_available_hooks", lambda: LANE3_HOOKS)
+    monkeypatch.setattr(ctl, "REPO_ROOT", tmp_path)
+    assert ctl.main(["--run", "CASE_03_A", "--um", "LOW"]) == 0
+    assert (ledger / "CASE_03_A.json").read_text(encoding="utf-8") == before
+    assert json.loads((tmp_path / "out" / "CASE_03_A.json").read_text())["decision"]["u_m_source"] == "cli_override"
+    assert ctl.main(["--run", "CASE_03_A"]) == 0  # without --um the ledger is filled in
+    written = json.loads((ledger / "CASE_03_A.json").read_text(encoding="utf-8"))
+    assert written["action"] == "ESCALATE" and written["decision_u_m_source"] == "unset"
+
+
+def test_condition_a_ignores_an_earlier_decision(monkeypatch, tmp_path):
+    a = record(u_m_level="LOW", action="PROCEED", decision_trace=[{"step": 1}], decision_policy="old")
+    (tmp_path / "CASE_03_A.json").write_text(json.dumps(a), encoding="utf-8")
+    monkeypatch.setattr(ctl, "LEDGER_DIR", tmp_path)
+    rec = ctl.load_record("CASE_03_A")
+    assert "decision_trace" not in rec and rec["action"] == "PENDING" and rec["u_m_level"] == "UNSET"
