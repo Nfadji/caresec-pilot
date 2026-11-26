@@ -169,14 +169,14 @@ def test_controller_never_reads_hidden_truth(monkeypatch):
 def test_bcd_do_not_inherit_condition_a_decision(monkeypatch, tmp_path):
     a = record(variant_id="CASE_02_A", u_m_level="LOW", u_e_level="MEDIUM", action="ESCALATE",
                decision_trace=[{"hook_result": "semgrep rerun -> no_finding"}],
-               decision_policy="lane5-rules-v1", decision_u_m_source="lane4")
+               decision_policy="lane5-rules-v1")
     a["case_id"] = "CASE_02"
     (tmp_path / "CASE_02_A.json").write_text(json.dumps(a), encoding="utf-8")
     monkeypatch.setattr(ctl, "LEDGER_DIR", tmp_path)
     monkeypatch.setattr(ctl, "_lane2_variants", lambda: (
         {"record_id": "CASE_02_B", "evidence": {}, "variant_status": "ready", "masked_fields": ["semgrep"]},))
     b = ctl.load_record("CASE_02_B")
-    assert not {"decision_trace", "decision_policy", "decision_u_m_source"} & set(b)
+    assert not {"decision_trace", "decision_policy"} & set(b)
     assert (b["u_m_level"], b["u_e_level"], b["action"]) == ("UNSET", "UNSET", "PENDING")
 
 
@@ -197,7 +197,7 @@ def test_um_override_never_writes_the_ledger(monkeypatch, tmp_path):
     assert json.loads((tmp_path / "out" / "CASE_03_A.json").read_text())["decision"]["u_m_source"] == "cli_override"
     assert ctl.main(["--run", "CASE_03_A"]) == 0  # without --um the ledger is filled in
     written = json.loads((ledger / "CASE_03_A.json").read_text(encoding="utf-8"))
-    assert written["action"] == "ESCALATE" and written["decision_u_m_source"] == "unset"
+    assert written["action"] == "ESCALATE" and written["u_m_level"] == "UNSET"
 
 
 def test_condition_a_ignores_an_earlier_decision(monkeypatch, tmp_path):
