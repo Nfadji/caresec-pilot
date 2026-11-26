@@ -31,17 +31,6 @@
   "u_e_level": "LOW",
   "action": "PROCEED",
   "scanned_at_utc": "2026-11-20T16:02:24.547409+00:00",
-  "decision_trace": [
-    {
-      "step": 1,
-      "u_m_level": "UNSET",
-      "u_e_level": "LOW",
-      "evidence_gaps": [],
-      "action": "ESCALATE",
-      "reason": "evidence complete but no validated model assessment (u_M UNSET)"
-    }
-  ],
-  "decision_policy": "lane5-rules-v1",
   "conclusion": "VULNERABLE",
   "decision": {
     "policy_version": "lane5-rules-v1",
