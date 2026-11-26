@@ -158,6 +158,7 @@ def assess_with_gemini(evidence: dict) -> dict:
         "variant_id": evidence["variant_id"],
         "cwe": evidence["cwe"],
         "claim": evidence.get("claim"),
+        "code_slice": evidence.get("code_slice"),
         "file": evidence["file"],
         "line_range": evidence.get("line_range"),
         "semgrep": evidence.get("semgrep"),
@@ -181,6 +182,14 @@ IMPORTANT RULES:
 3. If evidence is insufficient, return INSUFFICIENT_EVIDENCE.
 4. Distinguish vulnerability assessment from uncertainty.
 5. Your uncertainty rating is provisional and uncalibrated.
+6. u_m_level describes limitations in your ability to reason about this
+   vulnerability category, separately from evidence availability.
+7. Missing scanner results or source code are evidence gaps. Report them
+   in reasoning; do not use their absence alone to assign HIGH u_m_level.
+8. Still return INSUFFICIENT_EVIDENCE when the available evidence cannot
+   support a verdict. Never invent findings or assume the code is safe.
+9. Explain the specific model reasoning limitation behind u_m_level.
+   Do not select a rating to obtain a particular controller action.
 
 Return a JSON object containing:
 - verdict: VULNERABLE, NOT_VULNERABLE, or INSUFFICIENT_EVIDENCE

@@ -1,0 +1,73 @@
+{
+  "case_id": "CASE_01",
+  "variant_id": "CASE_01_B",
+  "evidence_condition": "B_MASKED",
+  "claim_id": "CLM_01",
+  "cwe": "CWE-22",
+  "claim": "possible_path_traversal",
+  "file": "cases/CASE_01.java",
+  "line_range": "48-54",
+  "source_available": true,
+  "source_hash": "38eeede5bccb322aa7af0df8c20fdb5beee33ef6ae539ec0cd622c84960c69c7",
+  "manifest_hash_match": "crlf_normalized",
+  "u_m_level": "HIGH",
+  "u_e_level": "HIGH",
+  "action": "ESCALATE",
+  "scanned_at_utc": "2026-11-20T16:02:24.547409+00:00",
+  "decision_trace": [
+    {
+      "step": 1,
+      "u_m_level": "LOW",
+      "u_e_level": "LOW",
+      "evidence_gaps": [],
+      "action": "PROCEED",
+      "reason": "evidence complete and consistent; model risk LOW"
+    }
+  ],
+  "decision_policy": "lane5-rules-v1",
+  "variant_status": "ready",
+  "semgrep": null,
+  "codeql": null,
+  "masked_fields": [
+    "codeql",
+    "semgrep"
+  ],
+  "conclusion": null,
+  "decision": {
+    "policy_version": "lane5-rules-v1",
+    "u_m_source": "lane4",
+    "agent_assessment_status": "MODEL_ASSESSED",
+    "agent_verdict": "INSUFFICIENT_EVIDENCE",
+    "agent_u_e_level": "HIGH",
+    "initial_u_e_level": "HIGH",
+    "initial_evidence_gaps": [
+      "semgrep_missing",
+      "codeql_missing",
+      "agent_insufficient_evidence"
+    ],
+    "final_evidence_gaps": [
+      "semgrep_missing",
+      "codeql_missing",
+      "agent_insufficient_evidence"
+    ],
+    "verify_calls": 0,
+    "max_verify_calls": 2,
+    "final_reason": "model-competence risk HIGH; more evidence would not resolve it",
+    "trace": [
+      {
+        "step": 1,
+        "u_m_level": "HIGH",
+        "u_e_level": "HIGH",
+        "evidence_gaps": [
+          "semgrep_missing",
+          "codeql_missing",
+          "agent_insufficient_evidence"
+        ],
+        "action": "ESCALATE",
+        "reason": "model-competence risk HIGH; more evidence would not resolve it"
+      }
+    ],
+    "evidence_collected": [],
+    "decided_at_utc": "2026-11-26T06:36:20.320222+00:00"
+  }
+}

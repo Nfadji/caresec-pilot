@@ -1,0 +1,39 @@
+{
+  "case_id": "CASE_01",
+  "variant_id": "CASE_01_A",
+  "cwe": "CWE-22",
+  "integrity": {
+    "status": "MATCH",
+    "manifest_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+    "actual_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+    "checked_at_utc": "2026-11-26T05:18:10.453895+00:00"
+  },
+  "evidence_validation": {
+    "schema_valid": true,
+    "missing_fields": [],
+    "scanner_statuses": {
+      "semgrep": "finding",
+      "codeql": "finding"
+    },
+    "failed_scanners": [],
+    "evidence_complete": true
+  },
+  "u_e": {
+    "u_e_level": "LOW",
+    "reason": "Both static scanners returned results.",
+    "method": "scanner_availability_v1"
+  },
+  "u_m": {
+    "u_m_level": "LOW",
+    "reason": "The assessment relies on scanner metadata without direct access to the source code to verify if sanitization or validation logic exists prior to the sink.",
+    "method": "model_reported_provisional"
+  },
+  "verdict": "VULNERABLE",
+  "assessment_status": "MODEL_ASSESSED",
+  "model_assessment": {
+    "verdict": "VULNERABLE",
+    "reasoning": "Both Semgrep and CodeQL scanners identified a path traversal vulnerability at line 55 of cases/CASE_01.java. The convergence of multiple static analysis tools on a path injection sink indicates a high probability of unsanitized user input reaching file system operations.",
+    "u_m_level": "LOW",
+    "uncertainty_reason": "The assessment relies on scanner metadata without direct access to the source code to verify if sanitization or validation logic exists prior to the sink."
+  }
+}

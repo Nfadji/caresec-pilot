@@ -1,0 +1,24 @@
+{
+  "case_id": "CASE_01",
+  "variant_id": "CASE_01_B",
+  "evidence_condition": "B_MASKED",
+  "claim_id": "CLM_01",
+  "cwe": "CWE-22",
+  "claim": "possible_path_traversal",
+  "file": "cases/CASE_01.java",
+  "line_range": "48-54",
+  "source_available": true,
+  "source_hash": "38eeede5bccb322aa7af0df8c20fdb5beee33ef6ae539ec0cd622c84960c69c7",
+  "manifest_hash_match": "crlf_normalized",
+  "u_m_level": "UNSET",
+  "u_e_level": "UNSET",
+  "action": "PENDING",
+  "scanned_at_utc": "2026-11-20T16:02:24.547409+00:00",
+  "variant_status": "ready",
+  "semgrep": {},
+  "codeql": {},
+  "masked_fields": [
+    "codeql",
+    "semgrep"
+  ]
+}

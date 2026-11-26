@@ -1,0 +1,9 @@
+{
+  "case_id": "CASE_01",
+  "integrity_status": "MATCH",
+  "manifest_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+  "actual_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+  "raw_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+  "hash_method": "raw",
+  "checked_at_utc": "2026-11-26T05:18:10.453895+00:00"
+}
