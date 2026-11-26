@@ -13,7 +13,7 @@ decision. Every step is logged. Nothing here reads `truth_private/` or hidden la
 | `python -m controller.decide --run CASE_01_A` | One record (any condition `A`–`D`) |
 | `python -m controller.decide --starter` | CASE_01–CASE_05, condition A |
 | `python -m controller.decide --all --conditions ABCD` | All 80 observation records |
-| `... --um LOW` | Demo only: overrides u_M while Lane 4 output is missing. Logged as `cli_override` |
+| `... --um LOW` | Demo only: overrides u_M while Lane 4 output is missing. Logged as `cli_override` in `reports/controller/`; the Evidence Ledger is **not** updated in this mode |
 | `... --no-ledger` | Skips filling `u_m_level`, `u_e_level`, `action` and `decision_trace` in `reports/ledger/<VARIANT>.json` (filled by default) |
 | `... --no-write` | Prints the decisions without writing files |
 | `python -m pytest tests/test_controller.py -q` | Unit tests (hooks are faked, so no scanners are needed) |
@@ -57,9 +57,16 @@ verdict that contradicts both scanners. u_E is LOW with 0 gaps, MEDIUM with 1 an
 
 `reports/controller/summary.md` has one row per record.
 
-The Evidence Ledger records (`reports/ledger/<CASE>_A.json`) are also updated in place: the
-`u_m_level`, `u_e_level` and `action` fields that Lane 3 leaves for Lanes 4–5 are filled in, and
-`decision_trace` and `decision_policy` are added. Scanner evidence in the ledger is never changed.
+The Evidence Ledger records (`reports/ledger/<VARIANT>.json`, when the file exists) are also
+updated in place: the `u_m_level`, `u_e_level` and `action` fields that Lane 3 leaves for Lanes 4–5
+are filled in, and `decision_trace`, `decision_policy` and `decision_u_m_source` are added. Scanner
+evidence in the ledger is never changed. Runs with `--um` never write to the ledger, so a demo
+override cannot be mistaken for a real Lane 4 value. `python -m scanners.run` rewrites the ledger
+and resets these fields, so re-run the controller after re-scanning.
+
+Conditions B, C and D are built from the condition A record's evidence only. Condition A's
+decision fields are reset (`UNSET` / `PENDING`) and its trace is dropped, so a masked record never
+carries a trace that mentions the evidence it hides.
 
 ## Status and dependencies (Nov 25)
 
