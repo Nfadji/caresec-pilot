@@ -59,7 +59,7 @@ verdict that contradicts both scanners. u_E is LOW with 0 gaps, MEDIUM with 1 an
 
 The Evidence Ledger records (`reports/ledger/<VARIANT>.json`, when the file exists) are also
 updated in place: the `u_m_level`, `u_e_level` and `action` fields that Lane 3 leaves for Lanes 4–5
-are filled in, and `decision_trace`, `decision_policy` and `decision_u_m_source` are added. Scanner
+are filled in, and `decision_trace` and `decision_policy` are added. Scanner
 evidence in the ledger is never changed. Runs with `--um` never write to the ledger, so a demo
 override cannot be mistaken for a real Lane 4 value. `python -m scanners.run` rewrites the ledger
 and resets these fields, so re-run the controller after re-scanning.

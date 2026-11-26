@@ -54,7 +54,7 @@ LEVELS = ("LOW", "MEDIUM", "HIGH")
 SCANNERS = ("semgrep", "codeql")
 CONDITION_NAMES = {"A": "A_COMPLETE", "B": "B_MASKED", "C": "C_DISAGREEMENT", "D": "D_PROVENANCE_GAP"}
 # Fields the controller writes into a ledger record; never inherited by another condition.
-DECISION_FIELDS = ("u_m_level", "u_e_level", "action", "decision_trace", "decision_policy", "decision_u_m_source")
+DECISION_FIELDS = ("u_m_level", "u_e_level", "action", "decision_trace", "decision_policy")
 
 # Which read-only hook can help with which evidence gap, in order of preference.
 # Hooks not exposed by scanners.verify_hooks.HOOKS are skipped. Lane 3 currently has no
@@ -467,7 +467,7 @@ def main(argv: list[str] | None = None) -> int:
             ledger = _read_json(ledger_path)
             ledger.update({"u_m_level": out["u_m_level"], "u_e_level": out["u_e_level"],
                            "action": out["action"], "decision_trace": d["trace"],
-                           "decision_policy": POLICY_VERSION, "decision_u_m_source": d["u_m_source"]})
+                           "decision_policy": POLICY_VERSION})
             ledger_path.write_text(json.dumps(ledger, indent=2) + "\n", encoding="utf-8")
 
     if rows and not args.no_write:
