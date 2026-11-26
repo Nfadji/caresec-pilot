@@ -79,6 +79,5 @@
       "reason": "verification budget (2) exhausted; unresolved: scanner_conflict"
     }
   ],
-  "decision_policy": "lane5-rules-v1",
-  "decision_u_m_source": "unset"
+  "decision_policy": "lane5-rules-v1"
 }

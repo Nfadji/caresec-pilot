@@ -41,6 +41,5 @@
       "reason": "evidence complete and consistent; model risk LOW"
     }
   ],
-  "decision_policy": "lane5-rules-v1",
-  "decision_u_m_source": "lane4"
+  "decision_policy": "lane5-rules-v1"
 }

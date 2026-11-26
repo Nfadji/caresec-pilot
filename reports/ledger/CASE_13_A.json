@@ -41,6 +41,5 @@
       "reason": "evidence complete but no validated model assessment (u_M UNSET)"
     }
   ],
-  "decision_policy": "lane5-rules-v1",
-  "decision_u_m_source": "unset"
+  "decision_policy": "lane5-rules-v1"
 }
