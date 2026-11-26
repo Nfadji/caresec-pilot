@@ -4,7 +4,7 @@
   "truth_used": false,
   "baselines": {
     "B1": {
-      "label": "LLM alone",
+      "description": "LLM alone",
       "source": "reports/agent_b1",
       "per_record": {
         "records": 80,
@@ -67,7 +67,7 @@
       }
     },
     "B2": {
-      "label": "LLM + scanners, no escalation",
+      "description": "LLM + scanners, no escalation",
       "source": "reports/agent",
       "per_record": {
         "records": 80,
@@ -130,7 +130,7 @@
       }
     },
     "B3": {
-      "label": "CARE-Sec PROCEED / VERIFY / ESCALATE",
+      "description": "CARE-Sec PROCEED / VERIFY / ESCALATE",
       "source": "reports/controller",
       "per_record": {
         "records": 80,

@@ -174,7 +174,7 @@ def compute(rows: list[dict[str, Any]], truth: dict[str, str] | None = None) -> 
                                "truth_used": truth is not None, "baselines": {}}
     for name, (label, folder, _) in SOURCES.items():
         metrics["baselines"][name] = {
-            "label": label, "source": folder,
+            "description": label, "source": folder,
             "per_record": _tally(rows, name, truth),
             "per_base_case": _by_case(rows, name, truth),
             "by_condition": {c: _tally([r for r in rows if r["condition"] == c], name, truth) for c in CONDITIONS},
@@ -218,7 +218,7 @@ def render(metrics: dict[str, Any]) -> str:
              "|---|---|---|---|---|"]
     for name, b in metrics["baselines"].items():
         t = b["per_record"]
-        lines.append(f"| {name} {b['label']} | {_of(n - t['missing'], n)} | {_of(t['concluded'], n)} | "
+        lines.append(f"| {name} {b['description']} | {_of(n - t['missing'], n)} | {_of(t['concluded'], n)} | "
                      f"{_of(t['deferred'], n)} | {t['excluded']} |")
     lines += ["", "Deferred means no automated answer: the model returned no verdict (B1, B2) or the "
               "controller escalated to a person (B3). Runs made with `--um` are demos and are left out of B3.", ""]
