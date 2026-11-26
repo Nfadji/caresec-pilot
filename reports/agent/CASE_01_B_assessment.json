@@ -1,0 +1,42 @@
+{
+  "case_id": "CASE_01",
+  "variant_id": "CASE_01_B",
+  "cwe": "CWE-22",
+  "integrity": {
+    "status": "MATCH",
+    "manifest_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+    "actual_sha256": "51e1d543c5fa8cf27434e42f35ae19798efe5d3e13683d0b139982d90372a1d2",
+    "checked_at_utc": "2026-11-26T05:18:10.453895+00:00"
+  },
+  "evidence_validation": {
+    "schema_valid": true,
+    "missing_fields": [],
+    "scanner_statuses": {
+      "semgrep": null,
+      "codeql": null
+    },
+    "failed_scanners": [
+      "semgrep",
+      "codeql"
+    ],
+    "evidence_complete": false
+  },
+  "u_e": {
+    "u_e_level": "HIGH",
+    "reason": "Both static scanners failed or are unavailable.",
+    "method": "scanner_availability_v1"
+  },
+  "u_m": {
+    "u_m_level": "HIGH",
+    "reason": "The assessment is limited by the complete absence of the source code and scanner output, preventing any analysis of data flow or sanitization logic.",
+    "method": "model_reported_provisional"
+  },
+  "verdict": "INSUFFICIENT_EVIDENCE",
+  "assessment_status": "MODEL_ASSESSED",
+  "model_assessment": {
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "reasoning": "The provided evidence contains only metadata about a potential CWE-22 vulnerability. The actual source code (cases/CASE_01.java) and the specific scanner findings (semgrep, codeql) are missing. Without the code context, it is impossible to determine if user-controlled input is being used to construct file paths without proper validation.",
+    "u_m_level": "HIGH",
+    "uncertainty_reason": "The assessment is limited by the complete absence of the source code and scanner output, preventing any analysis of data flow or sanitization logic."
+  }
+}
