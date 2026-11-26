@@ -1,0 +1,78 @@
+{
+  "title": "One Lane 4 assessment, reports/agent/<VARIANT>_assessment.json",
+  "description": "DRAFT 2026-11-25, proposed by Lane 6 from what the code on main writes today. Not frozen: the team freezes it at the Week 1 checkpoint. Only the fields Lanes 5 and 6 read are required; other fields are allowed.",
+  "type": "object",
+  "required": [
+    "case_id",
+    "variant_id",
+    "cwe",
+    "verdict",
+    "assessment_status",
+    "u_m",
+    "u_e"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^CASE_[0-9]{2}$"
+    },
+    "variant_id": {
+      "type": "string",
+      "pattern": "^CASE_[0-9]{2}_[A-D]$"
+    },
+    "cwe": {
+      "type": "string",
+      "enum": [
+        "CWE-22",
+        "CWE-89"
+      ]
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "VULNERABLE",
+        "NOT_VULNERABLE",
+        "INSUFFICIENT_EVIDENCE",
+        "NOT_ASSESSED"
+      ]
+    },
+    "assessment_status": {
+      "type": "string",
+      "minLength": 1
+    },
+    "u_m": {
+      "type": "object",
+      "required": [
+        "u_m_level"
+      ],
+      "properties": {
+        "u_m_level": {
+          "type": "string",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "UNSET"
+          ]
+        }
+      }
+    },
+    "u_e": {
+      "type": "object",
+      "required": [
+        "u_e_level"
+      ],
+      "properties": {
+        "u_e_level": {
+          "type": "string",
+          "enum": [
+            "LOW",
+            "MEDIUM",
+            "HIGH",
+            "UNSET"
+          ]
+        }
+      }
+    }
+  }
+}

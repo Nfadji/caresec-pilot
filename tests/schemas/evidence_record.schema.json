@@ -1,0 +1,298 @@
+{
+  "title": "One evidence record, reports/ledger/<CASE>_A.json",
+  "description": "DRAFT 2026-11-25, proposed by Lane 6 from what the code on main writes today. Not frozen: the team freezes it at the Week 1 checkpoint. decision_trace and decision_policy are written by Lane 5 and are optional here.",
+  "type": "object",
+  "required": [
+    "case_id",
+    "variant_id",
+    "evidence_condition",
+    "claim_id",
+    "cwe",
+    "claim",
+    "file",
+    "line_range",
+    "semgrep",
+    "codeql",
+    "source_available",
+    "source_hash",
+    "manifest_hash_match",
+    "u_m_level",
+    "u_e_level",
+    "action",
+    "scanned_at_utc"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "pattern": "^CASE_[0-9]{2}$"
+    },
+    "variant_id": {
+      "type": "string",
+      "pattern": "^CASE_[0-9]{2}_A$"
+    },
+    "evidence_condition": {
+      "const": "A_COMPLETE"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^CLM_[0-9]{2}$"
+    },
+    "cwe": {
+      "type": "string",
+      "enum": [
+        "CWE-22",
+        "CWE-89"
+      ]
+    },
+    "claim": {
+      "type": "string",
+      "enum": [
+        "possible_path_traversal",
+        "possible_sql_injection"
+      ]
+    },
+    "file": {
+      "type": "string",
+      "pattern": "^cases/CASE_[0-9]{2}\\.java$"
+    },
+    "line_range": {
+      "type": "string",
+      "pattern": "^[0-9]+-[0-9]+$"
+    },
+    "semgrep": {
+      "type": "object",
+      "required": [
+        "status",
+        "version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "finding",
+            "no_finding",
+            "tool_failed"
+          ]
+        },
+        "rule_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "matched_lines": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]+-[0-9]+$"
+        },
+        "finding_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "other_findings": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "build_mode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "suite": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "codeql": {
+      "type": "object",
+      "required": [
+        "status",
+        "version"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "finding",
+            "no_finding",
+            "tool_failed"
+          ]
+        },
+        "rule_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "version": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "matched_lines": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9]+-[0-9]+$"
+        },
+        "finding_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "other_findings": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "build_mode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "suite": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "error": {
+          "type": "string"
+        }
+      }
+    },
+    "source_available": {
+      "type": "boolean"
+    },
+    "source_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "manifest_hash_match": {
+      "type": "string",
+      "enum": [
+        "exact",
+        "crlf_normalized",
+        "mismatch"
+      ]
+    },
+    "u_m_level": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "UNSET"
+      ]
+    },
+    "u_e_level": {
+      "type": "string",
+      "enum": [
+        "LOW",
+        "MEDIUM",
+        "HIGH",
+        "UNSET"
+      ]
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PROCEED",
+        "VERIFY",
+        "ESCALATE"
+      ]
+    },
+    "scanned_at_utc": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T"
+    },
+    "decision_trace": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "step",
+          "u_m_level",
+          "u_e_level",
+          "evidence_gaps",
+          "action",
+          "reason"
+        ],
+        "properties": {
+          "step": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "u_m_level": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "UNSET"
+            ]
+          },
+          "u_e_level": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "UNSET"
+            ]
+          },
+          "evidence_gaps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "action": {
+            "type": "string",
+            "enum": [
+              "PROCEED",
+              "VERIFY",
+              "ESCALATE"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "hook": {
+            "type": "string"
+          },
+          "hook_ok": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "decision_policy": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

@@ -1,0 +1,207 @@
+{
+  "records": 80,
+  "base_cases": 20,
+  "truth_used": false,
+  "baselines": {
+    "B1": {
+      "label": "LLM alone",
+      "source": "reports/agent_b1",
+      "per_record": {
+        "records": 80,
+        "concluded": 0,
+        "deferred": 0,
+        "missing": 80,
+        "excluded": 0
+      },
+      "per_base_case": {
+        "cases": 20,
+        "cases_with_any_output": 0,
+        "cases_all_records_concluded": 0,
+        "cases_with_a_deferral": 0
+      },
+      "by_condition": {
+        "A": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        },
+        "B": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        },
+        "C": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        },
+        "D": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        }
+      },
+      "by_cwe": {
+        "CWE-22": {
+          "records": 40,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 40,
+          "excluded": 0
+        },
+        "CWE-89": {
+          "records": 40,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 40,
+          "excluded": 0
+        }
+      }
+    },
+    "B2": {
+      "label": "LLM + scanners, no escalation",
+      "source": "reports/agent",
+      "per_record": {
+        "records": 80,
+        "concluded": 0,
+        "deferred": 0,
+        "missing": 80,
+        "excluded": 0
+      },
+      "per_base_case": {
+        "cases": 20,
+        "cases_with_any_output": 0,
+        "cases_all_records_concluded": 0,
+        "cases_with_a_deferral": 0
+      },
+      "by_condition": {
+        "A": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        },
+        "B": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        },
+        "C": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        },
+        "D": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 20,
+          "excluded": 0
+        }
+      },
+      "by_cwe": {
+        "CWE-22": {
+          "records": 40,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 40,
+          "excluded": 0
+        },
+        "CWE-89": {
+          "records": 40,
+          "concluded": 0,
+          "deferred": 0,
+          "missing": 40,
+          "excluded": 0
+        }
+      }
+    },
+    "B3": {
+      "label": "CARE-Sec PROCEED / VERIFY / ESCALATE",
+      "source": "reports/controller",
+      "per_record": {
+        "records": 80,
+        "concluded": 0,
+        "deferred": 80,
+        "missing": 0,
+        "excluded": 0
+      },
+      "per_base_case": {
+        "cases": 20,
+        "cases_with_any_output": 20,
+        "cases_all_records_concluded": 0,
+        "cases_with_a_deferral": 20
+      },
+      "by_condition": {
+        "A": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 20,
+          "missing": 0,
+          "excluded": 0
+        },
+        "B": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 20,
+          "missing": 0,
+          "excluded": 0
+        },
+        "C": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 20,
+          "missing": 0,
+          "excluded": 0
+        },
+        "D": {
+          "records": 20,
+          "concluded": 0,
+          "deferred": 20,
+          "missing": 0,
+          "excluded": 0
+        }
+      },
+      "by_cwe": {
+        "CWE-22": {
+          "records": 40,
+          "concluded": 0,
+          "deferred": 40,
+          "missing": 0,
+          "excluded": 0
+        },
+        "CWE-89": {
+          "records": 40,
+          "concluded": 0,
+          "deferred": 40,
+          "missing": 0,
+          "excluded": 0
+        }
+      }
+    }
+  },
+  "verification": {
+    "records_decided": 80,
+    "records_with_a_verify_call": 60,
+    "verify_calls_total": 120,
+    "by_condition": {
+      "A": 22,
+      "B": 40,
+      "C": 22,
+      "D": 36
+    }
+  }
+}

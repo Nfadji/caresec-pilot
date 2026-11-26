@@ -8,7 +8,7 @@ Prototype pipeline evaluating Confidence-Aware Reasoning and Escalation (PROCEED
 - **Lane 3 - Kathryn Walker (@kwalerk) (scanners/):** Semgrep CE & CodeQL adapters, Evidence Ledger JSON builder, and read-only verification hooks.
 - **Lane 4 - Angel (agent/):** Structured LLM triage agent + u_M (model competence) and u_E (evidence completeness) uncertainty proxies.
 - **Lane 5 - Aldara (controller/):** PROCEED / VERIFY / ESCALATE decision controller with bounded verification loop (max 2 hook calls).
-- **Lane 6 - Open (tests/, reports/):** Schema validation, anti-leakage tests, and B1-B3 baseline evaluation summaries.
+- **Lane 6 - Kathryn Walker (@kwalerk) and @netsiritgithub (tests/, reports/):** Schema validation, anti-leakage tests, and B1-B3 baseline evaluation summaries.
 
 ## Frozen CLI Contract
 - python -m cases.validate_manifest
