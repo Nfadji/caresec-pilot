@@ -1,6 +1,6 @@
 # Lane 2 — Controlled Evidence Variants (`variants/`)
 
-Owner: Ephrem Asmamawu (`@asmamawu-ai21`).
+Owner: Ephrem 
 
 Takes Lane 3's scanner evidence for the 20 public cases and builds four
 versions of each case, one per evidence condition (20 × 4 = 80 records). The
