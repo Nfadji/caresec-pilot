@@ -14,17 +14,6 @@
   "u_e_level": "HIGH",
   "action": "ESCALATE",
   "scanned_at_utc": "2026-11-20T16:02:24.547409+00:00",
-  "decision_trace": [
-    {
-      "step": 1,
-      "u_m_level": "LOW",
-      "u_e_level": "LOW",
-      "evidence_gaps": [],
-      "action": "PROCEED",
-      "reason": "evidence complete and consistent; model risk LOW"
-    }
-  ],
-  "decision_policy": "lane5-rules-v1",
   "variant_status": "ready",
   "semgrep": null,
   "codeql": null,

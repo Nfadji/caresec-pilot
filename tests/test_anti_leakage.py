@@ -277,10 +277,6 @@ def test_masked_condition_shows_no_scanner_evidence():
         assert not record.get("semgrep") and not record.get("codeql"), cid
 
 
-@pytest.mark.xfail(strict=True, reason=(
-    "controller.decide.load_record copies decision_trace and decision_policy from the condition A "
-    "file into the B, C and D records (reported in the review of PR #11). "
-    "Remove this marker once that is fixed."))
 def test_other_conditions_do_not_inherit_the_condition_a_decision():
     from controller import decide
     carried = [f"{cid}_{k}" for cid in CASES for k in "BCD"

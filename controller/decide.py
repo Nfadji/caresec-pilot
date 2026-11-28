@@ -17,7 +17,8 @@ Output:
     reports/controller/<VARIANT>.json         ledger record + u_m_level, u_e_level, action, decision trace
     reports/controller/summary.md             one-row-per-record table
     reports/ledger/<VARIANT>.json             u_m_level, u_e_level, action and decision_trace filled in
-                                              (condition A records; skip with --no-ledger)
+                                              when that ledger file exists (skip with --no-ledger;
+                                              never written when --um overrides u_M)
 
 Policy (pilot deck, slide 17; rule-based engineering baseline, not calibrated):
     1. u_M HIGH                                   -> ESCALATE (more evidence cannot fix model competence)
@@ -52,6 +53,8 @@ MAX_VERIFY_STEPS = 2
 LEVELS = ("LOW", "MEDIUM", "HIGH")
 SCANNERS = ("semgrep", "codeql")
 CONDITION_NAMES = {"A": "A_COMPLETE", "B": "B_MASKED", "C": "C_DISAGREEMENT", "D": "D_PROVENANCE_GAP"}
+# Fields the controller writes into a ledger record; never inherited by another condition.
+DECISION_FIELDS = ("u_m_level", "u_e_level", "action", "decision_trace", "decision_policy")
 
 # Which read-only hook can help with which evidence gap, in order of preference.
 # Hooks not exposed by scanners.verify_hooks.HOOKS are skipped. Lane 3 currently has no
@@ -108,7 +111,10 @@ def load_record(variant_id: str) -> dict[str, Any]:
         raise FileNotFoundError(f"No Evidence Ledger record at {base_path} (run `python -m scanners.run`).")
     base = _read_json(base_path)
     if cond == "A":
-        return base
+        # The A file may already hold an earlier decision; decide from the evidence only.
+        rec = {k: v for k, v in base.items() if k not in DECISION_FIELDS}
+        rec.update({"u_m_level": "UNSET", "u_e_level": "UNSET", "action": "PENDING"})
+        return rec
 
     variants = _lane2_variants()
     vid = f"{case_id}_{cond}"
@@ -116,7 +122,10 @@ def load_record(variant_id: str) -> dict[str, Any]:
     if var is None:
         raise KeyError(f"variants.build produced no record {vid}")
     ev = var.get("evidence") or {}
-    rec = {k: v for k, v in base.items() if k not in SCANNERS}
+    # Start B/C/D from A's evidence fields only: condition A's decision (and its trace, which
+    # may mention evidence this condition must not see) is not carried over.
+    rec = {k: v for k, v in base.items() if k not in SCANNERS and k not in DECISION_FIELDS}
+    rec.update({"u_m_level": "UNSET", "u_e_level": "UNSET", "action": "PENDING"})
     rec.update({
         "variant_id": vid,
         "evidence_condition": CONDITION_NAMES[cond],
@@ -428,8 +437,10 @@ def main(argv: list[str] | None = None) -> int:
     variant_ids = select_variants(args)
     if not variant_ids:
         p.error("No Evidence Ledger records found in reports/ledger/.")
+    write_ledger = not args.no_ledger and not args.um
     if args.um:
-        print(f"[WARN] u_M overridden to {args.um} for all records (demo mode; recorded as cli_override).")
+        print(f"[WARN] u_M overridden to {args.um} for all records (demo mode; recorded as cli_override). "
+              "The Evidence Ledger is not updated in this mode.")
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     hook_fn, available = _default_hook(), _available_hooks()
@@ -452,7 +463,7 @@ def main(argv: list[str] | None = None) -> int:
             continue
         (OUT_DIR / f"{vid}.json").write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
         ledger_path = LEDGER_DIR / f"{vid}.json"
-        if not args.no_ledger and ledger_path.is_file():
+        if write_ledger and ledger_path.is_file():
             ledger = _read_json(ledger_path)
             ledger.update({"u_m_level": out["u_m_level"], "u_e_level": out["u_e_level"],
                            "action": out["action"], "decision_trace": d["trace"],
